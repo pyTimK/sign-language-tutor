@@ -1,5 +1,5 @@
 import { toast, TypeOptions } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+// import "react-toastify/dist/ReactToastify.css";
 
 const defaultOptions = { duration: 2000, type: "error" as TypeOptions };
 

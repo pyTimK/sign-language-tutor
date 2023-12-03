@@ -5,8 +5,9 @@ import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Bike Lock",
-  description: "A web-app-interface for the Arduino-powered Bike Lock System",
+  title: "Sign Language Tutor",
+  description:
+    "Welcome to Sign Language Tutor, your quick path to mastering sign language.",
 };
 
 export default function RootLayout({

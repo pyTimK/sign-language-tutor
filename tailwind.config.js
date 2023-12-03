@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+
 module.exports = {
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -31,6 +32,13 @@ module.exports = {
         red: "#FDC1C1",
         black: "#000000",
       },
+
+      fontFamily: {
+        jso: ['var(--font-jso)'],
+        inter: ['var(--font-inter)'],
+        outfit: ['var(--font-outfit)'],
+        lekton: ['var(--font-lekton)'],
+      }
     },
     
   },

@@ -41,3 +41,8 @@ next-env.d.ts
 
 desktop.ini
 folderico-*.ico
+
+
+
+# CUSTOM
+public/videos/

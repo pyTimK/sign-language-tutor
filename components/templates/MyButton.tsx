@@ -1,4 +1,3 @@
-import { jsoFont } from "@/styles/fonts";
 import { motion } from "framer-motion";
 import { MouseEventHandler } from "react";
 import { twMerge } from "tailwind-merge";
@@ -9,12 +8,14 @@ interface MyButtonProps {
   type?: "button" | "submit" | "reset";
   pX?: number;
   pY?: number;
+  width?: number;
   disabled?: boolean;
   className?: string;
   classNameBtn?: string;
   classNameText?: string;
   outlined?: boolean;
   dashed?: boolean;
+  noShadow?: boolean;
 }
 
 const MyButton: React.FC<MyButtonProps> = ({
@@ -23,22 +24,28 @@ const MyButton: React.FC<MyButtonProps> = ({
   type,
   pX = 1.2,
   pY = 0.8,
+  width,
   disabled,
   className,
   classNameBtn,
   classNameText,
   outlined = false,
   dashed = false,
+  noShadow = false,
 }) => {
   return (
     <motion.div
       className={twMerge(
-        "text-center w-full max-w-sm rounded-lg bg-darker_primary m-auto shadow-none outline-none select-none",
+        "text-center max-w-sm rounded-lg bg-light_primary m-0 shadow-none outline-none select-none",
         outlined && "bg-transparent border border-zinc-600",
         dashed && "border-dashed",
         disabled && "cursor-default opacity-50",
         className
       )}
+      style={{
+        width: width ? `${width}px` : "auto",
+        boxShadow: noShadow ? undefined : "4px 4px #434343",
+      }}
       onClick={onClick}
       whileTap={{ scale: disabled ? 1.0 : 0.8 }}
     >
@@ -53,10 +60,9 @@ const MyButton: React.FC<MyButtonProps> = ({
       >
         <p
           className={twMerge(
-            "text-white font-light w-max m-auto",
+            "text-black w-max m-auto font-inter",
             outlined && "text-black",
-            classNameText,
-            jsoFont
+            classNameText
           )}
           style={{ padding: `${pY}rem ${pX}rem` }}
         >

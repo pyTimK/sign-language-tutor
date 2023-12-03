@@ -26,7 +26,7 @@ export const LoadingContext = createContext({
 interface ConstantsWrapperProps {}
 
 const ConstantsWrapper: React.FC<ConstantsWrapperProps> = ({}) => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   return (
     <>

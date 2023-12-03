@@ -1,5 +1,4 @@
 import { InputField } from "@/hooks/useInputField";
-import { interFont } from "@/styles/fonts";
 import { ChangeEventHandler, RefObject } from "react";
 import { twMerge } from "tailwind-merge";
 
@@ -15,6 +14,7 @@ interface MyInputProps {
   onFocus?: () => void;
   onBlur?: () => void;
   maxLength?: number;
+  width?: number;
 }
 
 const MyInput: React.FC<MyInputProps> = ({
@@ -28,16 +28,19 @@ const MyInput: React.FC<MyInputProps> = ({
   onFocus,
   onBlur,
   maxLength,
+  width,
 }) => {
   return (
-    <div className={twMerge("flex justify-center", divClassName)}>
+    <div
+      className={twMerge("flex justify-center", divClassName)}
+      style={{ width: width ? `${width}px` : "auto" }}
+    >
       <input
         ref={inputField.ref}
         step="any"
         maxLength={maxLength}
         className={twMerge(
-          "w-full max-w-sm border rounded-lg bg-light_primary p-4",
-          interFont,
+          "w-full max-w-md border rounded-lg bg-yellow p-4 font-inter",
           inputField.error ? "border-red" : "border-zinc-600",
           className
         )}
