@@ -28,7 +28,7 @@ const NameInputPage: React.FC<NameInputPageProps> = ({}) => {
             const name = nameInput.getValue()!;
             const myUser = new MyUser(name, 0, 0, 0, "beginner");
             setMyUser(myUser);
-            setPage(Pages.SelectLevel);
+            setPage(Pages.SelectDiffiulty);
           }
         }}
       >

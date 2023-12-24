@@ -1,13 +1,10 @@
-import { PageWrapperContext, Pages } from "@/app/wrappers/PageWrapper";
 import MyButton from "../templates/MyButton";
-import { useContext } from "react";
 
 interface BackButtonProps {
-  page: Pages;
+  onClick?: () => void;
 }
 
-const BackButton: React.FC<BackButtonProps> = ({ page }) => {
-  const { setPage } = useContext(PageWrapperContext);
+const BackButton: React.FC<BackButtonProps> = ({ onClick }) => {
   return (
     <div className="absolute top-10 left-10">
       <MyButton
@@ -20,7 +17,7 @@ const BackButton: React.FC<BackButtonProps> = ({ page }) => {
         pY={0.4}
         onClick={(e) => {
           e.preventDefault();
-          setPage(page);
+          if (onClick) onClick();
         }}
       />
     </div>

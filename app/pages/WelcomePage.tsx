@@ -3,10 +3,12 @@ import PageLayout from "@/components/custom/PageLayout";
 import MyButton from "@/components/templates/MyButton";
 import { useContext } from "react";
 import { PageWrapperContext, Pages } from "../wrappers/PageWrapper";
+import { FHContext } from "../wrappers/FHWrapper";
 
 interface WelcomePageProps {}
 
 const WelcomePage: React.FC<WelcomePageProps> = ({}) => {
+  const { myUser } = useContext(FHContext);
   const { setPage } = useContext(PageWrapperContext);
   return (
     <PageLayout>
@@ -20,7 +22,12 @@ const WelcomePage: React.FC<WelcomePageProps> = ({}) => {
         <MyButton
           label="START"
           width={150}
-          onClick={() => setPage(Pages.NameInput)}
+          onClick={() => {
+            if (myUser) myUser.difficulty = "intermediate";
+            myUser?.generateQuiz();
+            setPage(Pages.AI);
+          }}
+          // onClick={() => setPage(Pages.NameInput)}
         />
       </div>
     </PageLayout>

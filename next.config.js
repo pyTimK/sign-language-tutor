@@ -17,7 +17,7 @@ module.exports = withPlugins([
   ],
 
   withPWA({
-    reactStrictMode: true,
+    reactStrictMode: false,
     trailingSlash: true,
   }),
 ]);

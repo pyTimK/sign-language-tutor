@@ -13,6 +13,8 @@ export default class TutorialLevel {
     return `vidoes/sl/${this.sl.videoName}.mp4`;
   }
 
+  static DEFAULT_LEVEL = new TutorialLevel(0, SL.yellow);
+
   static LEVELS = {
     BEGINNER: [
       new TutorialLevel(1, SL.yellow),

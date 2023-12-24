@@ -12,12 +12,11 @@ const myFetch = async (
     };
 
     const res = await fetch(url, {
-      method: "POST", // Use POST request method
+      method, // Use POST request method
       headers,
-      body: JSON.stringify(body_data), // Convert data to JSON string and send it in the request body
+      body: method === "POST" ? JSON.stringify(body_data) : undefined, // Convert data to JSON string and send it in the request body
     });
-    // console.log("res");
-    // console.log(res);
+    // console.log(`res: ${res}`);
     const data = await res.json();
     // console.log(`FETCHED ${base_url}: ${JSON.stringify(data)}`);
     return data;

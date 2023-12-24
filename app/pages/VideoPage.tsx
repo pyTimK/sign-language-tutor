@@ -7,21 +7,25 @@ import LevelText from "@/components/custom/LevelText";
 import MyButton from "@/components/templates/MyButton";
 import TutorialLevel from "@/classes/TutorialLevel";
 import { MyUser } from "@/classes/MyUser";
+import useModal from "@/hooks/useModal";
+import MyModal from "@/components/templates/MyModal";
+import BackModal from "@/components/modals/BackModal";
 
 interface VideoPageProps {}
 
 const VideoPage: React.FC<VideoPageProps> = ({}) => {
   const { myUser, setMyUser } = useContext(FHContext);
   const { setPage } = useContext(PageWrapperContext);
-  const level = myUser ? myUser.tutorialLevel + 1 : 0;
-  const tutorialLevels =
-    myUser?.difficulty === "beginner"
-      ? TutorialLevel.LEVELS.BEGINNER
-      : TutorialLevel.LEVELS.INTERMEDIATE;
-  const tutorialLevel = tutorialLevels[level < 1 ? 1 : level - 1];
+
+  const backmodal = useModal();
+
+  const tutorialLevel =
+    myUser?.getTutorialLevel() ?? TutorialLevel.DEFAULT_LEVEL;
+
   const signLanguage = tutorialLevel.sl;
   const videoName = signLanguage.videoName;
   const videoPath = `videos/${videoName}.mp4`;
+  const newLevel = tutorialLevel.level;
 
   return (
     <PageLayout>
@@ -30,7 +34,7 @@ const VideoPage: React.FC<VideoPageProps> = ({}) => {
           <p className="text-3xl font-inter">“ {signLanguage.phrase} ”</p>
         </div>
         <div className="w-full bg-green">
-          <video width="720" height="480" controls>
+          <video width="720" height="480" controls autoPlay loop>
             <source src={videoPath} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
@@ -43,15 +47,39 @@ const VideoPage: React.FC<VideoPageProps> = ({}) => {
         label="PROCEED"
         width={200}
         onClick={(e) => {
+          if (!myUser) return;
+
           e.preventDefault();
-          setMyUser((myUser) => MyUser.from(myUser, { tutorialLevel: level }));
-          setPage(Pages.Level);
+          setMyUser(
+            new MyUser(
+              myUser.name,
+              newLevel,
+              myUser.quizLevelNum,
+              myUser.score,
+              myUser.difficulty
+            )
+          );
+
+          if (newLevel >= myUser.getTutorialLevels().length) {
+            setPage(Pages.TutorialEnd);
+          } else {
+            setPage(Pages.Level);
+          }
         }}
       />
 
       {/*//! ABSOLUTE */}
-      <BackButton page={Pages.SelectLevel} />
-      <LevelText text={`LEVEL ${level}`} />
+      <BackButton onClick={backmodal.open} />
+      <LevelText text={`LEVEL ${tutorialLevel.level}`} />
+
+      {/*//! MODAL */}
+      <BackModal
+        modal={backmodal}
+        onBack={() => {
+          myUser?.resetLevels();
+          setPage(Pages.SelectDiffiulty);
+        }}
+      />
     </PageLayout>
   );
 };

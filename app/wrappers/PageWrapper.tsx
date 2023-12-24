@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, createContext, useState } from "react";
 import WelcomePage from "../pages/WelcomePage";
 import NameInputPage from "../pages/NameInputPage";
-import SelectLevelPage from "../pages/SelectLevelPage";
+import SelectDifficultyPage from "../pages/SelectDifficultyPage";
 import LevelPage from "../pages/LevelPage";
 import VideoPage from "../pages/VideoPage";
 import TutorialEndPage from "../pages/TutorialEndPage";
@@ -18,7 +18,7 @@ import QuizEndPage from "../pages/QuizEndPage";
 export const enum Pages {
   Welcome,
   NameInput,
-  SelectLevel,
+  SelectDiffiulty,
   Level,
   Video,
   TutorialEnd,
@@ -49,7 +49,7 @@ const PageWrapper: React.FC<PageWrapperProps> = ({}) => {
       <div className="bg-bg w-full h-full">
         {page === Pages.Welcome && <WelcomePage />}
         {page === Pages.NameInput && <NameInputPage />}
-        {page === Pages.SelectLevel && <SelectLevelPage />}
+        {page === Pages.SelectDiffiulty && <SelectDifficultyPage />}
         {page === Pages.Level && <LevelPage />}
         {page === Pages.Video && <VideoPage />}
         {page === Pages.TutorialEnd && <TutorialEndPage />}

@@ -6,16 +6,26 @@ import { PageWrapperContext, Pages } from "../wrappers/PageWrapper";
 import { Difficulty, MyUser } from "@/classes/MyUser";
 import BackButton from "@/components/custom/BackButton";
 
-interface SelectLevelPageProps {}
+interface SelectDifficultyPageProps {}
 
-const SelectLevelPage: React.FC<SelectLevelPageProps> = ({}) => {
+const SelectDifficultyPage: React.FC<SelectDifficultyPageProps> = ({}) => {
   const { myUser, setMyUser } = useContext(FHContext);
   const { setPage } = useContext(PageWrapperContext);
 
-  const selectLevel = (e: MouseEvent, level: Difficulty) => {
+  const selectDifficulty = (e: MouseEvent, difficulty: Difficulty) => {
     e.preventDefault();
 
-    setMyUser((myUser) => MyUser.from(myUser, { difficulty: level }));
+    if (!myUser) return;
+
+    setMyUser(
+      new MyUser(
+        myUser.name,
+        myUser.tutorialLevelNum,
+        myUser.quizLevelNum,
+        myUser.score,
+        difficulty
+      )
+    );
 
     setPage(Pages.Level);
   };
@@ -33,19 +43,19 @@ const SelectLevelPage: React.FC<SelectLevelPageProps> = ({}) => {
           label="BASIC"
           width={250}
           className="bg-blue"
-          onClick={(e) => selectLevel(e, "beginner")}
+          onClick={(e) => selectDifficulty(e, "beginner")}
         />
         <MyButton
           type="submit"
           label="INTERMEDIATE"
           width={250}
           className="bg-red"
-          onClick={(e) => selectLevel(e, "intermediate")}
+          onClick={(e) => selectDifficulty(e, "intermediate")}
         />
       </div>
-      <BackButton page={Pages.NameInput} />
+      <BackButton onClick={() => setPage(Pages.NameInput)} />
     </PageLayout>
   );
 };
 
-export default SelectLevelPage;
+export default SelectDifficultyPage;
