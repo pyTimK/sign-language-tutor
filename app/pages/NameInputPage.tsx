@@ -23,7 +23,9 @@ const NameInputPage: React.FC<NameInputPageProps> = ({}) => {
 
   return (
     <PageLayout>
-      <p className="font-jso text-5xl text-center mb-32">WHAT'S YOUR NAME?</p>
+      <p className="font-jso text-5xl text-center mb-32">
+        WHAT&apos;S YOUR NAME?
+      </p>
       <form
         className="flex flex-col gap-32 items-center"
         onSubmit={(e) => {
