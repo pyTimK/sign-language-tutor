@@ -3,7 +3,7 @@ import PageLayout from "@/components/custom/PageLayout";
 import MyButton from "@/components/templates/MyButton";
 import MyInput from "@/components/templates/MyInput";
 import { useInputField } from "@/hooks/useInputField";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { FHContext } from "../wrappers/FHWrapper";
 import { MyUser } from "@/classes/MyUser";
 import { PageWrapperContext, Pages } from "../wrappers/PageWrapper";
@@ -16,6 +16,11 @@ const NameInputPage: React.FC<NameInputPageProps> = ({}) => {
   const nameInput = useInputField((name) => [
     [!name, "Please enter your name"],
   ]);
+
+  useEffect(() => {
+    nameInput.ref.current?.focus();
+  }, []);
+
   return (
     <PageLayout>
       <p className="font-jso text-5xl text-center mb-32">WHAT'S YOUR NAME?</p>

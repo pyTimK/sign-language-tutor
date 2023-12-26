@@ -13,8 +13,17 @@ const TutorialEndPage: React.FC<TutorialEndPageProps> = ({}) => {
   const { myUser } = useContext(FHContext);
   const { setPage } = useContext(PageWrapperContext);
 
+  function goToQuiz() {
+    myUser?.generateQuiz();
+    setPage(Pages.Question);
+  }
+
+  function back() {
+    setPage(Pages.NameInput);
+  }
+
   return (
-    <PageLayout>
+    <PageLayout onKeyUp={{ Enter: goToQuiz, Escape: back }}>
       <p className="font-jso text-8xl text-center mb-8">CONGRATULATIONS!!!</p>
       <div className="flex gap-32 items-center justify-around mb-48">
         <Confetti size={100} />
@@ -35,12 +44,12 @@ const TutorialEndPage: React.FC<TutorialEndPageProps> = ({}) => {
           label="PROCEED TO QUIZ"
           width={500}
           onClick={(e) => {
-            myUser?.generateQuiz();
-            setPage(Pages.Question);
+            e.preventDefault();
+            goToQuiz();
           }}
         />
       </div>
-      <BackButton onClick={() => setPage(Pages.NameInput)} />
+      <BackButton onClick={back} />
     </PageLayout>
   );
 };

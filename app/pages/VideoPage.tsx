@@ -27,8 +27,32 @@ const VideoPage: React.FC<VideoPageProps> = ({}) => {
   const videoPath = `videos/${videoName}.mp4`;
   const newLevel = tutorialLevel.level;
 
+  function goToNextTutorialLevel() {
+    if (!myUser) return;
+
+    myUser.tutorialLevelNum = newLevel;
+
+    if (newLevel >= myUser.getTutorialLevels().length) {
+      setPage(Pages.TutorialEnd);
+    } else {
+      setPage(Pages.Level);
+    }
+  }
+
+  function back() {
+    myUser?.resetLevels();
+    setPage(Pages.SelectDiffiulty);
+  }
+
+  function skip() {
+    myUser?.resetLevels();
+    setPage(Pages.TutorialEnd);
+  }
+
   return (
-    <PageLayout>
+    <PageLayout
+      onKeyUp={{ Enter: goToNextTutorialLevel, Escape: back, s: skip }}
+    >
       <div className="flex flex-col mb-20 border rounded-t-3xl bg-yellow">
         <div className="w-full flex items-center justify-center py-2">
           <p className="text-3xl font-inter">“ {signLanguage.phrase} ”</p>
@@ -47,24 +71,8 @@ const VideoPage: React.FC<VideoPageProps> = ({}) => {
         label="PROCEED"
         width={200}
         onClick={(e) => {
-          if (!myUser) return;
-
           e.preventDefault();
-          setMyUser(
-            new MyUser(
-              myUser.name,
-              newLevel,
-              myUser.quizLevelNum,
-              myUser.score,
-              myUser.difficulty
-            )
-          );
-
-          if (newLevel >= myUser.getTutorialLevels().length) {
-            setPage(Pages.TutorialEnd);
-          } else {
-            setPage(Pages.Level);
-          }
+          goToNextTutorialLevel();
         }}
       />
 
@@ -73,13 +81,7 @@ const VideoPage: React.FC<VideoPageProps> = ({}) => {
       <LevelText text={`LEVEL ${tutorialLevel.level}`} />
 
       {/*//! MODAL */}
-      <BackModal
-        modal={backmodal}
-        onBack={() => {
-          myUser?.resetLevels();
-          setPage(Pages.SelectDiffiulty);
-        }}
-      />
+      <BackModal modal={backmodal} onBack={back} />
     </PageLayout>
   );
 };

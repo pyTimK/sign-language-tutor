@@ -9,6 +9,7 @@ import PageLayout from "@/components/custom/PageLayout";
 import QuizLevel from "@/classes/QuizLevel";
 import myFetch from "@/myfunctions/myFetch";
 import CountdownCircle from "@/components/templates/CountdownCircle/CountdownCirle";
+import { twMerge } from "tailwind-merge";
 
 interface AIPageProps {}
 
@@ -25,6 +26,11 @@ const AIPage: React.FC<AIPageProps> = ({}) => {
 
   // const videoPath = `videos/${videoName}.mp4`;
   // const newLevel = quizLevel.level;
+
+  function back() {
+    myUser?.resetLevels();
+    setPage(Pages.TutorialEnd);
+  }
 
   useEffect(() => {
     myFetch(
@@ -44,12 +50,24 @@ const AIPage: React.FC<AIPageProps> = ({}) => {
   }, []);
 
   return (
-    <PageLayout>
+    <PageLayout onKeyUp={{ Escape: back }}>
       <p className="font-jso text-3xl text-center mb-4">
         What is the sign language for
       </p>
-      <div className="w-80 flex items-center justify-center py-2 bg-yellow px-5 border">
-        <p className="text-7xl font-outfit">{signLanguage.phrase}</p>
+      <div
+        className="flex items-center justify-center py-2 bg-yellow px-5 border"
+        style={{
+          width: "25rem",
+        }}
+      >
+        <p
+          className={twMerge(
+            "text-6xl font-outfit text-center",
+            myUser?.difficulty === "intermediate" && "text-4xl"
+          )}
+        >
+          {signLanguage.phrase}
+        </p>
       </div>
 
       <CountdownCircle radius={100} duration={3} strokeWidth={20} />
@@ -71,13 +89,7 @@ const AIPage: React.FC<AIPageProps> = ({}) => {
       <LevelText text={`QUESTION ${quizLevel.level}`} />
 
       {/*//! MODAL */}
-      <BackModal
-        modal={backmodal}
-        onBack={() => {
-          myUser?.resetLevels();
-          setPage(Pages.TutorialEnd);
-        }}
-      />
+      <BackModal modal={backmodal} onBack={back} />
     </PageLayout>
   );
 };

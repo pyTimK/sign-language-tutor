@@ -13,14 +13,14 @@ export class MyUser {
 
   constructor(
     name: string,
-    tutorialLevel: number,
-    quizLevel: number,
+    tutorialLevelNum: number,
+    quizLevelNum: number,
     score: number,
     difficulty: Difficulty
   ) {
     this.name = name;
-    this.tutorialLevelNum = tutorialLevel;
-    this.quizLevelNum = quizLevel;
+    this.tutorialLevelNum = tutorialLevelNum;
+    this.quizLevelNum = quizLevelNum;
     this.score = score;
     this.difficulty = difficulty;
     this.quizLevels = [];
